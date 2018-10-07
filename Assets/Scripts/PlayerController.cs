@@ -24,5 +24,6 @@ public class PlayerController : NetworkBehaviour
         var y = Input.GetAxis("Vertical") * Time.deltaTime * 10f;
         
         transform.Translate(x, y, 0);
+
     }
 }
