@@ -15,6 +15,7 @@ public class move : MonoBehaviour {
         Vector2 v2 = this.transform.position;
         v2.y += 0.05f;
         this.transform.position = v2;
+        // foooooo
 
     }
 }
