@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -23,6 +24,16 @@ public class MainMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Persist.net.ServerChangeScene("AstoundingPlace");
+        }
+        if (Input.GetKeyDown(KeyCode.B)){
+            Persist.net.ServerChangeScene("AstoundingPlace");
+            Debug.Log("456");
+            //SceneManager.LoadScene("AstoundingPlace");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)){
+            Debug.Log("ww");
+            Application.Quit();
         }
     }
 }
