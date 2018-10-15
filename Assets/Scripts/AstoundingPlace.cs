@@ -8,7 +8,6 @@ public class AstoundingPlace : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Persist.net = (NetworkManager)GameObject.Find("NetworkManager").GetComponent(typeof(NetworkManager));
     }
 
     // Update is called once per frame

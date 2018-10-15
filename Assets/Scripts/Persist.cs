@@ -11,7 +11,7 @@ public struct Score
 public class Persist : MonoBehaviour {
 
     static public Dictionary<string, Score> scoreboard;
-    static public NetworkManager net;
+    static public NetworkLobbyManager net;
 
     // Use this for initialization
     void Start () {

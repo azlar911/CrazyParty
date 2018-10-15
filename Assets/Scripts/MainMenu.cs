@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        Persist.net = (NetworkManager)GameObject.Find("NetworkManager").GetComponent(typeof(NetworkManager));
+        Persist.net = (NetworkLobbyManager)GameObject.Find("NetworkLobbyManager").GetComponent(typeof(NetworkLobbyManager));
     }
 
     void Start()
@@ -24,16 +24,6 @@ public class MainMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Persist.net.ServerChangeScene("AstoundingPlace");
-        }
-        if (Input.GetKeyDown(KeyCode.B)){
-            Persist.net.ServerChangeScene("AstoundingPlace");
-            Debug.Log("456");
-            //SceneManager.LoadScene("AstoundingPlace");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape)){
-            Debug.Log("ww");
-            Application.Quit();
         }
     }
 }

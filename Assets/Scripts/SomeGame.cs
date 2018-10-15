@@ -13,7 +13,6 @@ public class SomeGame : MonoBehaviour
 
     void Awake()
     {
-        Persist.net = (NetworkManager)GameObject.Find("NetworkManager").GetComponent(typeof(NetworkManager));
     }
 
     // Use this for initialization
