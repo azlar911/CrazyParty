@@ -140,6 +140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f1f869bae7a674ea58ca2cdf0bcea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameScenes:
+  - TugOfWar
 --- !u!4 &1161009123
 Transform:
   m_ObjectHideFlags: 0

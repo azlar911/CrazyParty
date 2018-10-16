@@ -8,6 +8,12 @@ public class PlayerController : NetworkBehaviour {
     [SyncVar]
     public int role;    // Variable indicating which role should the player play.
                         // It's meaning depends on the particular scene.
+     
+    [ClientRpc]
+    void RpcRole(int r)
+    {
+        role = r;
+    }
 
     static public PlayerController localPlayer
     {

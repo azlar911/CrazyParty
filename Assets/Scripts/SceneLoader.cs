@@ -4,11 +4,16 @@ using UnityEngine;
 
 // Used upon loading scene.
 // Includes the player prefab, which depends on PlayerController.localPlayer.role.
-public class SceneLoader : MonoBehaviour {
+public class SceneLoader : NetworkBehaviour {
 
     public GameObject prefab
     {
         get; set;
+    }
+
+    void OnStartLocalPlayer()
+    {
+        PlayerController.localPlayer.CmdSpawn(prefab);
     }
 
 	// Use this for initialization

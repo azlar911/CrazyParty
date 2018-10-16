@@ -11,7 +11,6 @@ public class LoadingNext : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
     }
 
     // Update is called once per frame
@@ -25,8 +24,9 @@ public class LoadingNext : MonoBehaviour
 
     void NextLevel()
     {
-        int r = Random.Range(0, 1);
-        var gos = SceneManager.GetSceneByName(gameScenes[r]).GetRootGameObjects();
+        var s = gameScenes[new System.Random().Next(0, gameScenes.Length)];
+        Persist.net.ServerChangeScene(s);
+        var gos = SceneManager.GetSceneByName(s).GetRootGameObjects();
         var loader = (SceneLoader)System.Array.Find(gos, x => x.Equals("SceneLoader")).GetComponent(typeof(SceneLoader));
         PlayerController.localPlayer.CmdSpawn(loader.prefab);
     }

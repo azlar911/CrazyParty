@@ -15,7 +15,7 @@ public class Lobby : NetworkBehaviour
     void Update()
     {
         // TODO: check host
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && Persist.net.IsClientConnected())
         {
             Persist.goodScores = new SyncListInt();
             Persist.evilScores = new SyncListInt();
