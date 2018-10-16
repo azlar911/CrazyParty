@@ -3,17 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerController : NetworkBehaviour
-{
-    // Use this for initialization
-    void Start()
-    {
+public class PlayerController : NetworkBehaviour {
 
-    }
+    public GameObject prefab;
 
-    // Update is called once per frame
-    void Update()
-    {
+	void Update () {
         if (!isLocalPlayer)
         {
             return;
@@ -21,8 +15,20 @@ public class PlayerController : NetworkBehaviour
 
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * 10f;
         var y = Input.GetAxis("Vertical") * Time.deltaTime * 10f;
-        
+
         transform.Translate(x, y, 0);
 
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            CmdSpawn();
+        }
+    }
+
+    [Command]
+    void CmdSpawn()
+    {
+        var go = (GameObject)Instantiate(prefab, new Vector3(0, 1, 0), Quaternion.identity);
+        Destroy(gameObject);
+        NetworkServer.ReplacePlayerForConnection(connectionToClient, go, 0);
     }
 }

@@ -8,23 +8,24 @@ public struct Score
     int good, evil;
 }
 
-public class Persist : MonoBehaviour {
+public class Persist : NetworkBehaviour {
 
-    static public Dictionary<string, Score> scoreboard;
-    static public NetworkLobbyManager net;
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    void Reset()
+    void Start()
     {
-        scoreboard = new Dictionary<string, Score>();
+        DontDestroyOnLoad(this.gameObject);
     }
+
+    [SyncVar]
+    public Score[] _scores;
+    public NetworkManager _net = (NetworkManager)GameObject.Find("LobbyManager").GetComponent(typeof(NetworkManager));
+
+    Persist self = (Persist)GameObject.Find("Persist");
+
+    public Score[] scores
+    {
+        get => _scores;
+        set => _scores = value;
+    }
+
+    public NetworkManager net => _net;
 }
