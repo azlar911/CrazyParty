@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 // Used upon loading scene.
 // Includes the player prefab, which depends on PlayerController.localPlayer.role.
@@ -8,11 +9,15 @@ public class SceneLoader : NetworkBehaviour {
 
     public GameObject prefab
     {
-        get; set;
+        get
+        {
+            return (GameObject)Resources.Load("LobbyPlayer");
+        }
     }
 
     void OnStartLocalPlayer()
     {
+        base.OnStartLocalPlayer();
         PlayerController.localPlayer.CmdSpawn(prefab);
     }
 
