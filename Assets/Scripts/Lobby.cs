@@ -17,8 +17,9 @@ public class Lobby : NetworkBehaviour
         // TODO: check host
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameObject.Find("Persist").scores = new Score[4];
-            GameObject.Find("Persist").net.ServerChangeScene("LoadingNext");
+            Persist.goodScores = new SyncListInt();
+            Persist.evilScores = new SyncListInt();
+            Persist.net.ServerChangeScene("LoadingNext");
         }
     }
 }

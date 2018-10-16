@@ -12,20 +12,46 @@ public class Persist : NetworkBehaviour {
 
     void Start()
     {
+        _net = (NetworkManager)this.gameObject.GetComponent(typeof(NetworkManager));
+        instance = this;
         DontDestroyOnLoad(this.gameObject);
     }
+    
+    SyncListInt _goodScores;
+    SyncListInt _evilScores;
+    NetworkManager _net;
 
-    [SyncVar]
-    public Score[] _scores;
-    public NetworkManager _net = (NetworkManager)GameObject.Find("LobbyManager").GetComponent(typeof(NetworkManager));
+    static Persist instance;
 
-    Persist self = (Persist)GameObject.Find("Persist");
-
-    public Score[] scores
+    static public SyncListInt goodScores
     {
-        get => _scores;
-        set => _scores = value;
+        get
+        {
+            return instance._goodScores;
+        }
+        set
+        {
+            instance._goodScores = value;
+        }
     }
 
-    public NetworkManager net => _net;
+    static public SyncListInt evilScores
+    {
+        get
+        {
+            return instance._evilScores;
+        }
+        set
+        {
+            instance._evilScores = value;
+        }
+    }
+
+    static public NetworkManager net
+    {
+        get
+        {
+            return instance._net;
+        }
+    }
 }

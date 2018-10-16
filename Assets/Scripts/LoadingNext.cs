@@ -8,11 +8,17 @@ using UnityEngine.Networking;
 public class LoadingNext : NetworkBehaviour
 {
     public string[] gameScenes = new string[10];
-    public GameObject[] playerPrefabs = new GameObject[10];
+    GameObject[] playerPrefabs = new GameObject[10];
 
     // Use this for initialization
     void Start()
     {
+        foreach(string s in gameScenes)
+        {
+            var gos = SceneManager.GetSceneByName(s).GetRootGameObjects();
+            //var loader = (SceneLoader)Array.Find(gos, "SceneLoader");
+            //playerPrefabs = loader.prefab;
+        }
         DontDestroyOnLoad(this.gameObject);
     }
 
