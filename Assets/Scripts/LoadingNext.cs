@@ -1,24 +1,16 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
-public class LoadingNext : NetworkBehaviour
+public class LoadingNext : MonoBehaviour
 {
     public string[] gameScenes = new string[10];
-    GameObject[] playerPrefabs = new GameObject[10];
 
     // Use this for initialization
     void Start()
     {
-        foreach(string s in gameScenes)
-        {
-            var gos = SceneManager.GetSceneByName(s).GetRootGameObjects();
-            //var loader = (SceneLoader)Array.Find(gos, "SceneLoader");
-            //playerPrefabs = loader.prefab;
-        }
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -33,12 +25,9 @@ public class LoadingNext : NetworkBehaviour
 
     void NextLevel()
     {
-        int r = Random.Range(1, 3); //SceneManager.sceneCountInBuildSettings
-    }
-
-    [Command]
-    void CmdSpawn()
-    {
-
+        int r = Random.Range(0, 1);
+        var gos = SceneManager.GetSceneByName(gameScenes[r]).GetRootGameObjects();
+        var loader = (SceneLoader)System.Array.Find(gos, x => x.Equals("SceneLoader")).GetComponent(typeof(SceneLoader));
+        PlayerController.localPlayer.CmdSpawn(loader.prefab);
     }
 }

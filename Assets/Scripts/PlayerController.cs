@@ -5,7 +5,24 @@ using UnityEngine.Networking;
 
 public class PlayerController : NetworkBehaviour {
 
-    public GameObject prefab;
+    [SyncVar]
+    public int role;    // Variable indicating which role should the player play.
+                        // It's meaning depends on the particular scene.
+
+    static public PlayerController localPlayer
+    {
+        get
+        {
+            var gos = GameObject.FindGameObjectsWithTag("Player");
+            foreach (var go in gos)
+            {
+                var p = (PlayerController)go.GetComponent(typeof(PlayerController));
+                if (p.isLocalPlayer)
+                    return p;
+            }
+            return null;
+        }
+    }
 
 	void Update () {
         if (!isLocalPlayer)
@@ -20,14 +37,13 @@ public class PlayerController : NetworkBehaviour {
 
         if(Input.GetKeyDown(KeyCode.P))
         {
-            CmdSpawn();
         }
     }
 
     [Command]
-    void CmdSpawn()
+    public void CmdSpawn(GameObject prefab)
     {
-        var go = (GameObject)Instantiate(prefab, new Vector3(0, 1, 0), Quaternion.identity);
+        var go = (GameObject)Instantiate(prefab);
         Destroy(gameObject);
         NetworkServer.ReplacePlayerForConnection(connectionToClient, go, 0);
     }

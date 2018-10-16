@@ -12,13 +12,14 @@ public class Persist : NetworkBehaviour {
 
     void Start()
     {
-        _net = (NetworkManager)this.gameObject.GetComponent(typeof(NetworkManager));
+        _net = (NetworkManager)gameObject.GetComponent(typeof(NetworkManager));
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
     }
     
     SyncListInt _goodScores;
     SyncListInt _evilScores;
+
     NetworkManager _net;
 
     static Persist instance;
