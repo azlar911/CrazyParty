@@ -3,22 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-// Used upon loading scene.
-// Includes the player prefab, which depends on PlayerController.localPlayer.role.
-public class SceneLoader : NetworkBehaviour {
+public class SceneLoader : MonoBehaviour {
 
-    public GameObject prefab
+    // What the game object should be for the four players
+    public GameObject PrefabFor(int i)
     {
-        get
-        {
-            return (GameObject)Resources.Load("LobbyPlayer");
-        }
-    }
-
-    void OnStartLocalPlayer()
-    {
-        base.OnStartLocalPlayer();
-        PlayerController.localPlayer.CmdSpawn(prefab);
+        return null;
     }
 
 	// Use this for initialization

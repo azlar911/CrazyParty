@@ -5,31 +5,6 @@ using UnityEngine.Networking;
 
 public class PlayerController : NetworkBehaviour {
 
-    [SyncVar]
-    public int role;    // Variable indicating which role should the player play.
-                        // It's meaning depends on the particular scene.
-     
-    [ClientRpc]
-    void RpcRole(int r)
-    {
-        role = r;
-    }
-
-    static public PlayerController localPlayer
-    {
-        get
-        {
-            var gos = GameObject.FindGameObjectsWithTag("Player");
-            foreach (var go in gos)
-            {
-                var p = (PlayerController)go.GetComponent(typeof(PlayerController));
-                if (p.isLocalPlayer)
-                    return p;
-            }
-            return null;
-        }
-    }
-
 	void Update () {
         if (!isLocalPlayer)
         {
@@ -43,7 +18,7 @@ public class PlayerController : NetworkBehaviour {
     }
 
     [Command]
-    public void CmdSpawn(GameObject prefab)
+    public void CmdRespawn(GameObject prefab)
     {
         var go = (GameObject)Instantiate(prefab);
         Destroy(gameObject);
