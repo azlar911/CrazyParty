@@ -23,17 +23,22 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Persist.net.ServerChangeScene("AstoundingPlace");
-        }
-        if (Input.GetKeyDown(KeyCode.B)){
-            Persist.net.ServerChangeScene("AstoundingPlace");
-            Debug.Log("456");
-            //SceneManager.LoadScene("AstoundingPlace");
+            nextLevel();
+            //Persist.net.ServerChangeScene("AstoundingPlace");
+            
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)){
-            Debug.Log("ww");
-            Application.Quit();
-        }
+    }
+    
+    void nextLevel()
+    {
+        int r = Random.Range(1, 2);//SceneManager.sceneCountInBuildSettings
+        SceneManager.LoadScene(r);
+        //Debug.Log("number " + r);
+
+        string ss = SceneManager.GetSceneByBuildIndex(r).name;
+        //Debug.Log("scenename " + ss);
+
+        Persist.net.ServerChangeScene(ss);
     }
 }
