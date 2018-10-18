@@ -15,6 +15,10 @@ public class PlayerController : NetworkBehaviour {
         var y = Input.GetAxis("Vertical") * Time.deltaTime * 10f;
 
         transform.Translate(x, y, 0);
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+        }
     }
 
     [Command]

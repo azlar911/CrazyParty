@@ -26,5 +26,8 @@ public class LoadingNext : MonoBehaviour
     {
         var s = gameScenes[new System.Random().Next(0, gameScenes.Length)];
         Persist.net.ServerChangeScene(s);
+        var gos = SceneManager.GetSceneByName(s).GetRootGameObjects();
+        var loader = (SceneLoader)System.Array.Find(gos, x => x.Equals("SceneLoader")).GetComponent(typeof(SceneLoader));
+        PlayerController.localPlayer.CmdSpawn(loader.prefab);
     }
 }
