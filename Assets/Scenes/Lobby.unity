@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3440af3c22e950d438603d2568e44b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScenes:
+  levelScenes:
   - TugOfWar
 --- !u!1 &744716550
 GameObject:

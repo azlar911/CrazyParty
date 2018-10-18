@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Should have network behaviour: server has authority.
 public class LoadingNext : MonoBehaviour
 {
     void Update()
@@ -16,7 +17,7 @@ public class LoadingNext : MonoBehaviour
     IEnumerator NextLevelIn(float t)
     {
         yield return new WaitForSeconds(t);
-        var s = Persist.gameScenes[new System.Random().Next(0, Persist.gameScenes.Length)];
+        var s = Persist.levelScenes[new System.Random().Next(0, Persist.levelScenes.Length)];
         Persist.net.ServerChangeScene(s);
     }
 }

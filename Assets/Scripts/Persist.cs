@@ -54,11 +54,11 @@ public class Persist : NetworkBehaviour {
         }
     }
 
-    static public string[] gameScenes
+    static public string[] levelScenes
     {
         get
         {
-            return instance._sl.gameScenes;
+            return instance._sl.levelScenes;
         }
     }
 

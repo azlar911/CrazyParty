@@ -4,11 +4,16 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-public class NetworkController : NetworkManager {
+public class NetworkController : NetworkManager
+{
 
     string sceneName;
     int[] roles = new int[4];
-    int playerCount = 0;
+
+    object countLock = new object();
+    int roleCount = 0;
+    int readyCount = 0;
+    int clientCount = 0;
 
     void Start()
     {
@@ -29,10 +34,39 @@ public class NetworkController : NetworkManager {
         }
     }
 
+    public override void OnServerConnect(NetworkConnection conn)
+    {
+        base.OnServerConnect(conn);
+        lock (countLock)
+        {
+            clientCount++;
+        }
+    }
+
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        base.OnServerDisconnect(conn);
+        lock (countLock)
+        {
+            clientCount--;
+        }
+    }
+
+    public override void OnServerReady(NetworkConnection conn)
+    {
+        base.OnServerReady(conn);
+        lock (countLock)
+        {
+            readyCount++;
+        }
+    }
+
     public override void OnServerSceneChanged(string s)
     {
         sceneName = s;
-        playerCount = 0;
+        readyCount = 0;
+
+        roleCount = 0;
         shuffle(roles);
         base.OnServerSceneChanged(s);
     }
@@ -41,21 +75,41 @@ public class NetworkController : NetworkManager {
     {
         var gos = SceneManager.GetSceneByName(sceneName).GetRootGameObjects();
         var sl = System.Array.Find(gos, x => x.name.Equals("SceneLoader"));
-        if (sl.name.Equals(""))
+        if (sl == null)
             Debug.LogError("Scene doesn't contain a SceneLoader game object");
 
         var loader = (SceneLoader)sl.GetComponent(typeof(SceneLoader));
         if (loader == null)
         {
             Debug.LogError("Game object doesn't contain a SceneLoader script");
-            var player = (GameObject)GameObject.Instantiate(playerPrefab);
-            NetworkServer.AddPlayerForConnection(conn, player, id);
+            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id));
         }
         else
         {
-            var playerPrefab = loader.playerPrefabs[roles[playerCount++]];
-            var player = (GameObject)GameObject.Instantiate(playerPrefab);
-            NetworkServer.AddPlayerForConnection(conn, player, id);
+            int i;
+            lock (countLock)
+            {
+                i = roleCount++;
+            }
+            var playerPrefab = loader.playerPrefabs[roles[i]];
+            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id));
         }
+    }
+
+    IEnumerator SpawnOnClientsReady(NetworkConnection conn, GameObject playerPrefab, short id)
+    {
+        Debug.Log(readyCount + ", " + clientCount);
+        while (true)
+        {
+            lock (countLock)
+            {
+                if (readyCount >= clientCount)
+                    break;
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        var player = (GameObject)GameObject.Instantiate(playerPrefab);
+        NetworkServer.AddPlayerForConnection(conn, player, id);
     }
 }
