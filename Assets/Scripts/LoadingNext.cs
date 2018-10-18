@@ -2,32 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Networking;
 
 public class LoadingNext : MonoBehaviour
 {
-    public string[] gameScenes = new string[10];
-
-    // Use this for initialization
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-        {
-            NextLevel();
-        }
+            StartCoroutine(NextLevelIn(0));
+        else if(Input.GetKeyDown(KeyCode.P))
+            NextLevelIn(3);
     }
 
-    void NextLevel()
+    IEnumerator NextLevelIn(float t)
     {
-        var s = gameScenes[new System.Random().Next(0, gameScenes.Length)];
+        yield return new WaitForSeconds(t);
+        var s = Persist.gameScenes[new System.Random().Next(0, Persist.gameScenes.Length)];
         Persist.net.ServerChangeScene(s);
-        var gos = SceneManager.GetSceneByName(s).GetRootGameObjects();
-        var loader = (SceneLoader)System.Array.Find(gos, x => x.Equals("SceneLoader")).GetComponent(typeof(SceneLoader));
-        PlayerController.localPlayer.CmdSpawn(loader.prefab);
     }
 }

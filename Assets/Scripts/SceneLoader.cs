@@ -1,31 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class SceneLoader : MonoBehaviour {
+public class SceneLoader : NetworkBehaviour {
 
-    // What the game object should be for the four players
-    public GameObject PrefabFor(int i)
+    public GameObject[] playerPrefabs = new GameObject[4];
+
+    public override void OnStartLocalPlayer()
     {
-<<<<<<< HEAD
-        return null;
-=======
-        get; set;
+        foreach (var p in playerPrefabs)
+            ClientScene.RegisterPrefab(p);
+        Debug.Log("ClientScene.AddPlayer");
+        ClientScene.AddPlayer(connectionToServer, 0);
     }
 
-    void OnStartLocalPlayer()
+    void Update()
     {
-        PlayerController.localPlayer.CmdSpawn(prefab);
->>>>>>> parent of 7fc8467... WIP
+        if(Input.GetKeyDown(KeyCode.Space))
+            ClientScene.AddPlayer(connectionToServer, 0);
     }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void OnDestroy()
+    {
+        foreach (var p in playerPrefabs)
+            ClientScene.UnregisterPrefab(p);
+    }
 }

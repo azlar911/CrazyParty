@@ -4,43 +4,58 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-class PlayerData
-{
-    public PlayerData(NetworkConnection conn, short id, GameObject go)
-    {
-        this.conn = conn;
-        this.id = id;
-        this.go = go;
-    }
-
-    public NetworkConnection conn;
-    public short id;
-    public GameObject go;
-}
-
 public class NetworkController : NetworkManager {
 
-    List<PlayerData> pds;
+    string sceneName;
+    int[] roles = new int[4];
+    int playerCount = 0;
 
-	public override void OnServerSceneChanged(string sceneName)
+    void Start()
     {
-        var scene = SceneManager.GetSceneByName(sceneName);
-        var gos = scene.GetRootGameObjects();
-        var loader = (SceneLoader)System.Array.Find(gos, x => x.name.Equals("SceneLoader")).GetComponent(typeof(SceneLoader));
-        int i = 0;
-        foreach(var pd in pds)
+        for (int i = 0; i < roles.Length; i++)
+            roles[i] = i;
+    }
+
+    static void shuffle(int[] arr)  // How the hell is this not in the standard library??
+    {
+        var rng = new System.Random();
+        int n = arr.Length;
+        while (n > 1)
         {
-            var player = (GameObject)GameObject.Instantiate(loader.PrefabFor(i));
-            Destroy(pd.go);
-            pd.go = player;
-            i++;
+            int k = rng.Next(n--);
+            int tmp = arr[n];
+            arr[n] = arr[k];
+            arr[k] = tmp;
         }
+    }
+
+    public override void OnServerSceneChanged(string s)
+    {
+        sceneName = s;
+        playerCount = 0;
+        shuffle(roles);
+        base.OnServerSceneChanged(s);
     }
 
     public override void OnServerAddPlayer(NetworkConnection conn, short id)
     {
-        var player = (GameObject)GameObject.Instantiate(playerPrefab);
-        NetworkServer.AddPlayerForConnection(conn, player, id);
-        pds.Add(new PlayerData(conn, id, player));
+        var gos = SceneManager.GetSceneByName(sceneName).GetRootGameObjects();
+        var sl = System.Array.Find(gos, x => x.name.Equals("SceneLoader"));
+        if (sl.name.Equals(""))
+            Debug.LogError("Scene doesn't contain a SceneLoader game object");
+
+        var loader = (SceneLoader)sl.GetComponent(typeof(SceneLoader));
+        if (loader == null)
+        {
+            Debug.LogError("Game object doesn't contain a SceneLoader script");
+            var player = (GameObject)GameObject.Instantiate(playerPrefab);
+            NetworkServer.AddPlayerForConnection(conn, player, id);
+        }
+        else
+        {
+            var playerPrefab = loader.playerPrefabs[roles[playerCount++]];
+            var player = (GameObject)GameObject.Instantiate(playerPrefab);
+            NetworkServer.AddPlayerForConnection(conn, player, id);
+        }
     }
 }

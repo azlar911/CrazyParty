@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public struct Score
-{
-    int good, evil;
-}
-
 public class Persist : NetworkBehaviour {
 
     void Start()
     {
         _net = (NetworkManager)gameObject.GetComponent(typeof(NetworkManager));
+        _sl = (SceneList)gameObject.GetComponent(typeof(SceneList));
         instance = this;
+
         DontDestroyOnLoad(gameObject);
     }
     
@@ -21,6 +18,7 @@ public class Persist : NetworkBehaviour {
     SyncListInt _evilScores;
 
     NetworkManager _net;
+    SceneList _sl;
 
     static Persist instance;
 
@@ -53,6 +51,22 @@ public class Persist : NetworkBehaviour {
         get
         {
             return instance._net;
+        }
+    }
+
+    static public string[] gameScenes
+    {
+        get
+        {
+            return instance._sl.gameScenes;
+        }
+    }
+
+    static public Dictionary<string, int> sceneId
+    {
+        get
+        {
+            return instance._sl.sceneId;
         }
     }
 }
