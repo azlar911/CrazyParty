@@ -5,6 +5,8 @@ using UnityEngine;
 public class SceneList : MonoBehaviour {
 
     public List<string> levelScenes = new List<string>();
+
+    [HideInInspector]
     public Dictionary<string, int> sceneId = new Dictionary<string, int>();
 
     // Use this for initialization
