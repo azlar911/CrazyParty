@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class SceneList : MonoBehaviour {
 
-    public string[] levelScenes = new string[10];
+    public List<string> levelScenes = new List<string>();
     public Dictionary<string, int> sceneId = new Dictionary<string, int>();
 
     // Use this for initialization
     void Start () {
-        for (int i = 0; i < levelScenes.Length; i++)
+        for (int i = 0; i < levelScenes.Count; i++)
             sceneId[levelScenes[i]] = i;
     }
 	

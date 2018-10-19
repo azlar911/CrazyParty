@@ -54,7 +54,7 @@ public class Persist : NetworkBehaviour {
         }
     }
 
-    static public string[] levelScenes
+    static public List<string> levelScenes
     {
         get
         {

@@ -98,7 +98,6 @@ public class NetworkController : NetworkManager
 
     IEnumerator SpawnOnClientsReady(NetworkConnection conn, GameObject playerPrefab, short id)
     {
-        Debug.Log(readyCount + ", " + clientCount);
         while (true)
         {
             lock (countLock)
@@ -106,7 +105,7 @@ public class NetworkController : NetworkManager
                 if (readyCount >= clientCount)
                     break;
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return null;
         }
 
         var player = (GameObject)GameObject.Instantiate(playerPrefab);

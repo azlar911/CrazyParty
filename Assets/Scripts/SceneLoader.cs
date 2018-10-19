@@ -20,7 +20,6 @@ public class SceneLoader : NetworkBehaviour {
     {
         if (!isLocalPlayer)
             return;
-        
     }
 
     void OnDestroy()

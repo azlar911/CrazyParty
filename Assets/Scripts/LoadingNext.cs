@@ -17,7 +17,8 @@ public class LoadingNext : MonoBehaviour
     IEnumerator NextLevelIn(float t)
     {
         yield return new WaitForSeconds(t);
-        var s = Persist.levelScenes[new System.Random().Next(0, Persist.levelScenes.Length)];
+        Debug.Log(Persist.levelScenes.Count);
+        var s = Persist.levelScenes[new System.Random().Next(0, Persist.levelScenes.Count)];
         Persist.net.ServerChangeScene(s);
     }
 }

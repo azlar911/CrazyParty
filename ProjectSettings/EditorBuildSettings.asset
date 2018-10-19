@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadingNext.unity
     guid: 0108ddeec012bb6409117ab4c4d78513
   - enabled: 1
-    path: Assets/Scenes/TugOfWar.unity
+    path: Assets/Scenes/LevelTemplate.unity
     guid: 0f8aed48aff5f324ebb3be54c4704ff3
   m_configObjects: {}
