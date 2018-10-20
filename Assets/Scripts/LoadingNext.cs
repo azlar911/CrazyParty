@@ -1,33 +1,24 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadingNext : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            nextLevel();
-        }
-	}
-
-    void nextLevel()
+// Should have network behaviour: server has authority.
+public class LoadingNext : MonoBehaviour
+{
+    void Update()
     {
-        int r = Random.Range(1, 3); //SceneManager.sceneCountInBuildSettings
-        SceneManager.LoadScene(r);
-        //Debug.Log("number " + r);
+        if (Input.GetKeyDown(KeyCode.Space))
+            StartCoroutine(NextLevelIn(0));
+        else if(Input.GetKeyDown(KeyCode.P))
+            NextLevelIn(3);
+    }
 
-        string ss = SceneManager.GetSceneByBuildIndex(r).name;
-        //Debug.Log("scenename " + ss);
-
-        Persist.net.ServerChangeScene(ss);
+    IEnumerator NextLevelIn(float t)
+    {
+        yield return new WaitForSeconds(t);
+        Debug.Log(Persist.levelScenes.Count);
+        var s = Persist.levelScenes[new System.Random().Next(0, Persist.levelScenes.Count)];
+        Persist.net.ServerChangeScene(s);
     }
 }

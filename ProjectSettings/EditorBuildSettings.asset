@@ -7,8 +7,14 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
-    guid: 6faf9539ed1405c49be0fe17b000401e
+    guid: 3300a3613411a5041bbfd4f587c4bae0
   - enabled: 1
-    path: Assets/Scenes/AstoundingPlace.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/Lobby.unity
+    guid: a24d97af98b2e5a45a02adc99cd15d2d
+  - enabled: 1
+    path: Assets/Scenes/LoadingNext.unity
+    guid: 0108ddeec012bb6409117ab4c4d78513
+  - enabled: 1
+    path: Assets/Scenes/LevelTemplate.unity
+    guid: 0f8aed48aff5f324ebb3be54c4704ff3
   m_configObjects: {}
