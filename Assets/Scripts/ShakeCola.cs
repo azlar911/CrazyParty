@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ShakeCola : MonoBehaviour {
+public class ShakeCola : NetworkBehaviour {
     private GameObject colaColor;
-
+    private Vector2 yposition = new Vector2(0, 0);
 	// Use this for initialization
 	void Start () {
 		colaColor = GameObject.Find("ColaColor");
@@ -12,12 +13,19 @@ public class ShakeCola : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if(!isLocalPlayer){ //只有本機玩家可以操控
+            return;
+        }
+
+        if(Input.GetMouseButton(0)) //滑鼠左鍵
+        {
+            CmdShakeCola();
+        }
 	}
-    private void OnMouseDown()
+
+    [Command] //執行shake cola動作（要從client傳到server)
+    void CmdShakeCola()
     {
-        //print("test");
-        //colaColor.transform.Translate(Vector2.up);
-        colaColor.transform.Translate(new Vector2(0,10));
+        colaColor.transform.Translate(yposition + new Vector2(0,10));
     }
 }

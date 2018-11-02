@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelScenes:
-  - LevelTemplate
+  - ShakeCola
 --- !u!1 &744716550
 GameObject:
   m_ObjectHideFlags: 0
