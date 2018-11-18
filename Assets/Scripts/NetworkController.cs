@@ -21,7 +21,7 @@ public class NetworkController : NetworkManager
             roles[i] = i;
     }
 
-    static void shuffle(int[] arr)  // How the hell is this not in the standard library??
+    static void Shuffle(int[] arr)  // How the hell is this not in the standard library??
     {
         var rng = new System.Random();
         int n = arr.Length;
@@ -67,7 +67,7 @@ public class NetworkController : NetworkManager
         readyCount = 0;
 
         roleCount = 0;
-        shuffle(roles);
+        Shuffle(roles);
         base.OnServerSceneChanged(s);
     }
 

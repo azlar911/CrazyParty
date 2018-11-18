@@ -11,7 +11,7 @@ public class LoadingNext : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             StartCoroutine(NextLevelIn(0));
         else if(Input.GetKeyDown(KeyCode.P))
-            NextLevelIn(3);
+            StartCoroutine(NextLevelIn(3));
     }
 
     IEnumerator NextLevelIn(float t)
