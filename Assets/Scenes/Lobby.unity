@@ -323,7 +323,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelScenes:
-  - TugOfWar
   - ShakeCola
 --- !u!1 &744716550
 GameObject:
