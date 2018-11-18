@@ -10,9 +10,16 @@ public class SceneLoader : NetworkBehaviour {
     void Start()
     {
         foreach (var p in playerPrefabs)
-            ClientScene.RegisterPrefab(p);
-
-        Debug.Log("ClientScene.AddPlayer");
+        {
+            if (p.GetComponent(typeof(CrazyBehaviour)))
+                ClientScene.RegisterPrefab(p);
+            else
+            {
+                Debug.Log("Player prefab required to have CrazyBehaviour");
+                Bug.Splat();
+            }
+        }
+            
         ClientScene.AddPlayer(connectionToServer, 0);
     }
 
