@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class SceneLoader : NetworkBehaviour {
 
     public GameObject[] playerPrefabs = new GameObject[4];
+    public List<GameObject> spawnablePrefabs = new List<GameObject>();
 
     void Start()
     {
@@ -19,7 +20,10 @@ public class SceneLoader : NetworkBehaviour {
                 Bug.Splat();
             }
         }
-            
+
+        foreach (var s in spawnablePrefabs)
+            ClientScene.RegisterPrefab(s);
+
         ClientScene.AddPlayer(connectionToServer, 0);
     }
 
@@ -33,5 +37,8 @@ public class SceneLoader : NetworkBehaviour {
     {
         foreach (var p in playerPrefabs)
             ClientScene.UnregisterPrefab(p);
+
+        foreach (var s in spawnablePrefabs)
+            ClientScene.UnregisterPrefab(s);
     }
 }
