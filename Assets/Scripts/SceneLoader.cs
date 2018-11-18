@@ -6,24 +6,13 @@ using UnityEngine.Networking;
 public class SceneLoader : NetworkBehaviour {
 
     public GameObject[] playerPrefabs = new GameObject[4];
-    public List<GameObject> spawnablePrefabs = new List<GameObject>();
 
     void Start()
     {
         foreach (var p in playerPrefabs)
-        {
-            if (p.GetComponent(typeof(PlayerBehaviour)))
-                ClientScene.RegisterPrefab(p);
-            else
-            {
-                Debug.LogError("Player prefab required to have PlayerBehaviour");
-                Bug.Splat();
-            }
-        }
+            ClientScene.RegisterPrefab(p);
 
-        foreach (var s in spawnablePrefabs)
-            ClientScene.RegisterPrefab(s);
-
+        Debug.Log("ClientScene.AddPlayer");
         ClientScene.AddPlayer(connectionToServer, 0);
     }
 
@@ -37,8 +26,5 @@ public class SceneLoader : NetworkBehaviour {
     {
         foreach (var p in playerPrefabs)
             ClientScene.UnregisterPrefab(p);
-
-        foreach (var s in spawnablePrefabs)
-            ClientScene.UnregisterPrefab(s);
     }
 }

@@ -6,18 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class NetworkController : NetworkManager
 {
+
     string sceneName;
     int[] roles = new int[4];
 
     object countLock = new object();
     int roleCount = 0;
-    public int clientCount
-    {
-        get;
-        private set;
-    }
-
-    int levelDoneCount = 0;
+    int readyCount = 0;
+    int clientCount = 0;
 
     void Start()
     {
@@ -25,7 +21,7 @@ public class NetworkController : NetworkManager
             roles[i] = i;
     }
 
-    static void Shuffle(int[] arr)  // How the hell is this not in the standard library??
+    static void shuffle(int[] arr)  // How the hell is this not in the standard library??
     {
         var rng = new System.Random();
         int n = arr.Length;
@@ -56,15 +52,22 @@ public class NetworkController : NetworkManager
         }
     }
 
+    public override void OnServerReady(NetworkConnection conn)
+    {
+        base.OnServerReady(conn);
+        lock (countLock)
+        {
+            readyCount++;
+        }
+    }
+
     public override void OnServerSceneChanged(string s)
     {
         sceneName = s;
+        readyCount = 0;
 
         roleCount = 0;
-        Shuffle(roles);
-
-        levelDoneCount = 0;
-
+        shuffle(roles);
         base.OnServerSceneChanged(s);
     }
 
@@ -79,7 +82,7 @@ public class NetworkController : NetworkManager
         if (loader == null)
         {
             Debug.LogError("Game object doesn't contain a SceneLoader script");
-            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id, -1));
+            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id));
         }
         else
         {
@@ -89,17 +92,17 @@ public class NetworkController : NetworkManager
                 i = roleCount++;
             }
             var playerPrefab = loader.playerPrefabs[roles[i]];
-            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id, roles[i]));
+            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id));
         }
     }
 
-    IEnumerator SpawnOnClientsReady(NetworkConnection conn, GameObject playerPrefab, short id, int role)
+    IEnumerator SpawnOnClientsReady(NetworkConnection conn, GameObject playerPrefab, short id)
     {
         while (true)
         {
             lock (countLock)
             {
-                if (roleCount >= clientCount)
+                if (readyCount >= clientCount)
                     break;
             }
             yield return null;
@@ -107,18 +110,5 @@ public class NetworkController : NetworkManager
 
         var player = (GameObject)GameObject.Instantiate(playerPrefab);
         NetworkServer.AddPlayerForConnection(conn, player, id);
-
-        var cb = (PlayerBehaviour)player.GetComponent(typeof(PlayerBehaviour));
-        cb.RpcSetRole(role);
-    }
-
-    public void ServerLevelDone()
-    {
-        lock(countLock)
-        {
-            levelDoneCount++;
-            if (levelDoneCount >= clientCount)
-                ServerChangeScene("LoadingNext");
-        }
     }
 }
