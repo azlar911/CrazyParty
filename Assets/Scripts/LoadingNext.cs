@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
-// Should have network behaviour: server has authority.
-public class LoadingNext : MonoBehaviour
+public class LoadingNext : NetworkBehaviour
 {
     void Update()
     {
