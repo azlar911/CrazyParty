@@ -7,7 +7,7 @@ public class Persist : NetworkBehaviour {
 
     void Start()
     {
-        _net = (NetworkManager)gameObject.GetComponent(typeof(NetworkManager));
+        _net = (NetworkController)gameObject.GetComponent(typeof(NetworkController));
         _sl = (SceneList)gameObject.GetComponent(typeof(SceneList));
         instance = this;
 
@@ -17,7 +17,7 @@ public class Persist : NetworkBehaviour {
     SyncListInt _goodScores;
     SyncListInt _evilScores;
 
-    NetworkManager _net;
+    NetworkController _net;
     SceneList _sl;
 
     static Persist instance;
@@ -46,7 +46,7 @@ public class Persist : NetworkBehaviour {
         }
     }
 
-    static public NetworkManager net
+    static public NetworkController net
     {
         get
         {
