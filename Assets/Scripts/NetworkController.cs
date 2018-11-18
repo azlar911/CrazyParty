@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class NetworkController : NetworkManager
 {
-
     string sceneName;
     int[] roles = new int[4];
 
@@ -102,7 +101,7 @@ public class NetworkController : NetworkManager
         var player = (GameObject)GameObject.Instantiate(playerPrefab);
         NetworkServer.AddPlayerForConnection(conn, player, id);
 
-        var cb = (CrazyBehaviour)player.GetComponent(typeof(CrazyBehaviour));
+        var cb = (PlayerBehaviour)player.GetComponent(typeof(PlayerBehaviour));
         cb.RpcSetRole(role);
     }
 }

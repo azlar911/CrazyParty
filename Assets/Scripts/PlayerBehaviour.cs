@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class CrazyBehaviour : NetworkBehaviour
+public class PlayerBehaviour : NetworkBehaviour
 {
     public int role
     {

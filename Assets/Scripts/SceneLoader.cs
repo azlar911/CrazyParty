@@ -12,7 +12,7 @@ public class SceneLoader : NetworkBehaviour {
     {
         foreach (var p in playerPrefabs)
         {
-            if (p.GetComponent(typeof(CrazyBehaviour)))
+            if (p.GetComponent(typeof(PlayerBehaviour)))
                 ClientScene.RegisterPrefab(p);
             else
             {

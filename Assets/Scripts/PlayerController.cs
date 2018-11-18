@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerController : CrazyBehaviour
+public class PlayerController : PlayerBehaviour
 {
 
     void Start()

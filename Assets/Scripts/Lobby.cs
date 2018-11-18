@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-public class Lobby : MonoBehaviour
+public class Lobby : NetworkBehaviour
 {
 
     void Start()
