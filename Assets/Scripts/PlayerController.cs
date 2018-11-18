@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerController : NetworkBehaviour {
+public class PlayerController : PlayerBehaviour
+{
 
-	void Update () {
+    void Start()
+    {
+        Debug.Log("Role = " + role.ToString());
+    }
+
+    void Update()
+    {
         if (!isLocalPlayer)
             return;
 
