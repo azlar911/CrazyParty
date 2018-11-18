@@ -21,6 +21,8 @@ public class ShakeCola : PlayerBehaviour {
         {
             CmdShakeCola();
         }
+
+        print(colaColor.transform.position.y);
 	}
 
     [Command] //執行shake cola動作（要從client傳到server)
