@@ -16,4 +16,21 @@ public class PlayerBehaviour : NetworkBehaviour
     {
         role = i;
     }
+
+    bool levelDone = false;
+
+    public void LevelDone()
+    {
+        if (!levelDone)
+        {
+            levelDone = true;
+            CmdLevelDone();
+        }
+    }
+
+    [Command]
+    void CmdLevelDone()
+    {
+        Persist.net.ServerLevelDone();
+    }
 }
