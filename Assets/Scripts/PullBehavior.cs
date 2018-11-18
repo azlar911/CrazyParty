@@ -7,8 +7,9 @@ public class PullBehavior : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        //gameObject.SetActive(false);
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -20,21 +21,22 @@ public class PullBehavior : NetworkBehaviour {
 
     void OnMouseDown()
     {
-        Debug.Log("yee");
-        if(gameObject.tag == "rightPull")
+        if (gameObject.tag == "rightPull")
         {
             Debug.Log("right1");
             GameObject rope = GameObject.Find("rope");
             rope.transform.position = rope.transform.position + new Vector3(1, 0, 0);
             Debug.Log("right2");
         }
-            
+
+
         else if (gameObject.tag == "leftPull")
         {
             GameObject rope = GameObject.Find("rope");
             rope.transform.position = rope.transform.position + new Vector3(-1, 0, 0);
             Debug.Log("left");
         }
-            
+        gameObject.SetActive(true);
     }
+
 }

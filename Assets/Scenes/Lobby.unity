@@ -324,7 +324,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelScenes:
   - TugOfWar
-  - LevelTemplate
 --- !u!1 &744716550
 GameObject:
   m_ObjectHideFlags: 0
