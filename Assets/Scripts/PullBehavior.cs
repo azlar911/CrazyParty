@@ -3,34 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PullBehavior : NetworkBehaviour {
+public class PullBehavior : PlayerBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-        //gameObject.SetActive(false);
-
+    void Start()
+    {
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    void Update()
+    {
 
         if (!isLocalPlayer)
             return;
         //OnMouseDown();
-	}
+    }
 
     void OnMouseDown()
     {
-        if (gameObject.tag == "rightPull")
+        if (role % 2 == 0)
         {
             Debug.Log("right1");
             GameObject rope = GameObject.Find("rope");
             rope.transform.position = rope.transform.position + new Vector3(1, 0, 0);
             Debug.Log("right2");
         }
-
-
-        else if (gameObject.tag == "leftPull")
+        else
         {
             GameObject rope = GameObject.Find("rope");
             rope.transform.position = rope.transform.position + new Vector3(-1, 0, 0);
