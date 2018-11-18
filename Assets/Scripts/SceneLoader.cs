@@ -16,7 +16,7 @@ public class SceneLoader : NetworkBehaviour {
                 ClientScene.RegisterPrefab(p);
             else
             {
-                Debug.Log("Player prefab required to have CrazyBehaviour");
+                Debug.LogError("Player prefab required to have PlayerBehaviour");
                 Bug.Splat();
             }
         }
