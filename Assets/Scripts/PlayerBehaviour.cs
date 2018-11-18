@@ -5,17 +5,8 @@ using UnityEngine.Networking;
 
 public class PlayerBehaviour : NetworkBehaviour
 {
-    public int role
-    {
-        get;
-        private set;
-    }
-
-    [ClientRpc]
-    public void RpcSetRole(int i)
-    {
-        role = i;
-    }
+    [SyncVar]
+    public int role = 0;
 
     bool levelDone = false;
 

@@ -5,9 +5,9 @@ using UnityEngine.Networking;
 
 public class LoadingNext : NetworkBehaviour
 {
-    void Update()
+    void Start()
     {
-        StartCoroutine(NextLevelIn(3));
+        StartCoroutine(NextLevelIn(1));
     }
 
     IEnumerator NextLevelIn(float t)

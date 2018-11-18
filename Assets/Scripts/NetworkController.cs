@@ -106,10 +106,9 @@ public class NetworkController : NetworkManager
         }
 
         var player = (GameObject)GameObject.Instantiate(playerPrefab);
+        var pb = (PlayerBehaviour)player.GetComponent(typeof(PlayerBehaviour));
+        pb.role = role;
         NetworkServer.AddPlayerForConnection(conn, player, id);
-
-        var cb = (PlayerBehaviour)player.GetComponent(typeof(PlayerBehaviour));
-        cb.RpcSetRole(role);
     }
 
     public void ServerLevelDone()
