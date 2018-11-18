@@ -13,6 +13,8 @@ public class NetworkController : NetworkManager
     int roleCount = 0;
     int clientCount = 0;
 
+    int sceneDoneCount = 0;
+
     void Start()
     {
         for (int i = 0; i < roles.Length; i++)
@@ -80,7 +82,7 @@ public class NetworkController : NetworkManager
                 i = roleCount++;
             }
             var playerPrefab = loader.playerPrefabs[roles[i]];
-            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id, i));
+            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id, roles[i]));
         }
     }
 
@@ -95,8 +97,6 @@ public class NetworkController : NetworkManager
             }
             yield return null;
         }
-
-        Debug.Log("clientCount = " + clientCount.ToString());
 
         var player = (GameObject)GameObject.Instantiate(playerPrefab);
         NetworkServer.AddPlayerForConnection(conn, player, id);

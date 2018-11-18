@@ -6,15 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class Lobby : NetworkBehaviour
 {
-
     void Start()
     {
-
+        
     }
     
     void Update()
     {
-        // TODO: check host
         if (Input.GetKeyDown(KeyCode.Space) && Persist.net.IsClientConnected())
         {
             Persist.goodScores = new SyncListInt();
