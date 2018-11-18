@@ -7,6 +7,7 @@ public class Bug : MonoBehaviour {
 
     public static void Splat()
     {
+        Persist.net.StopClient();
         SceneManager.LoadScene("BugSplat");
     }
 }
