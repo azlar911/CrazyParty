@@ -770,6 +770,7 @@ GameObject:
   - component: {fileID: 1499037630}
   - component: {fileID: 1499037632}
   - component: {fileID: 1499037631}
+  - component: {fileID: 1499037633}
   m_Layer: 5
   m_Name: Cola
   m_TagString: Untagged
@@ -829,3 +830,14 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1499037629}
   m_CullTransparentMesh: 0
+--- !u!114 &1499037633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1499037629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf1363458ddfb4c1ba82e7980bb6c455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

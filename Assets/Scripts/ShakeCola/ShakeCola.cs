@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class ShakeCola : PlayerBehaviour {
     private GameObject colaColor;
     private Vector2 yposition = new Vector2(0, 0);
-    private bool playerFinish = false; //玩家是否要結束
+    public bool playerFinish = false; //玩家是否要結束
 	// Use this for initialization
 	void Start () {
 		colaColor = GameObject.Find("ColaColor");
@@ -28,14 +28,15 @@ public class ShakeCola : PlayerBehaviour {
         }
 	}
 
+    public void getEnd()
+    { //Endline如果偵測到可樂已經搖滿房間，會呼叫這個function，設定該玩家已可結束遊戲
+        print("get end!");
+        //playerFinish = true;
+    }
+
     [Command] //執行shake cola動作（要從client傳到server)
     void CmdShakeCola()
     {
         colaColor.transform.Translate(yposition + new Vector2(0,10));
-    }
-
-    public void getEnd(){ //Endline如果偵測到可樂已經搖滿房間，會呼叫這個function，設定該玩家已可結束遊戲
-        print("get end!");
-        playerFinish = true;
     }
 }

@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class Endline : MonoBehaviour {
     // Use this for initialization
-    GameObject shakeCola;
     void Start () {
-
     }
+
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
-    void Awake()
-    {
-        shakeCola = GameObject.Find("Click"); 
-    }
-
     //可樂搖滿房間
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         print("success!");
-        shakeCola.GetComponent<ShakeCola>().getEnd();
+        // Step one
+        GameObject clone = (GameObject)Instantiate((GameObject)Resources.Load("prefabs/Click", typeof(GameObject)));
+
+        // Step two
+        ShakeCola shakeCola = clone.GetComponent<ShakeCola>();
+
+        // Step three
+        shakeCola.getEnd();
+
     }
 }
