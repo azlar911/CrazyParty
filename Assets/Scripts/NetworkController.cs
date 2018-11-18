@@ -11,9 +11,13 @@ public class NetworkController : NetworkManager
 
     object countLock = new object();
     int roleCount = 0;
-    int clientCount = 0;
+    public int clientCount
+    {
+        get;
+        private set;
+    }
 
-    int sceneDoneCount = 0;
+    int levelDoneCount = 0;
 
     void Start()
     {
@@ -58,6 +62,9 @@ public class NetworkController : NetworkManager
 
         roleCount = 0;
         Shuffle(roles);
+
+        levelDoneCount = 0;
+
         base.OnServerSceneChanged(s);
     }
 
@@ -103,5 +110,15 @@ public class NetworkController : NetworkManager
 
         var cb = (PlayerBehaviour)player.GetComponent(typeof(PlayerBehaviour));
         cb.RpcSetRole(role);
+    }
+
+    public void ServerLevelDone()
+    {
+        lock(countLock)
+        {
+            levelDoneCount++;
+            if (levelDoneCount >= clientCount)
+                ServerChangeScene("LoadingNext");
+        }
     }
 }
