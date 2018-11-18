@@ -181,8 +181,8 @@ GameObject:
   - component: {fileID: 621226981}
   - component: {fileID: 621226980}
   - component: {fileID: 621226983}
-  - component: {fileID: 621226982}
   - component: {fileID: 621226984}
+  - component: {fileID: 621226982}
   m_Layer: 0
   m_Name: Persist
   m_TagString: Untagged

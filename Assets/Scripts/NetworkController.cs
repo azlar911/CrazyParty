@@ -11,7 +11,13 @@ public class NetworkController : NetworkManager
 
     object countLock = new object();
     int roleCount = 0;
-    int clientCount = 0;
+    public int clientCount
+    {
+        get;
+        private set;
+    }
+
+    int levelDoneCount = 0;
 
     void Start()
     {
@@ -56,6 +62,9 @@ public class NetworkController : NetworkManager
 
         roleCount = 0;
         Shuffle(roles);
+
+        levelDoneCount = 0;
+
         base.OnServerSceneChanged(s);
     }
 
@@ -80,7 +89,7 @@ public class NetworkController : NetworkManager
                 i = roleCount++;
             }
             var playerPrefab = loader.playerPrefabs[roles[i]];
-            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id, i));
+            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id, roles[i]));
         }
     }
 
@@ -96,12 +105,20 @@ public class NetworkController : NetworkManager
             yield return null;
         }
 
-        Debug.Log("clientCount = " + clientCount.ToString());
-
         var player = (GameObject)GameObject.Instantiate(playerPrefab);
         NetworkServer.AddPlayerForConnection(conn, player, id);
 
         var cb = (PlayerBehaviour)player.GetComponent(typeof(PlayerBehaviour));
         cb.RpcSetRole(role);
+    }
+
+    public void ServerLevelDone()
+    {
+        lock(countLock)
+        {
+            levelDoneCount++;
+            if (levelDoneCount >= clientCount)
+                ServerChangeScene("LoadingNext");
+        }
     }
 }
