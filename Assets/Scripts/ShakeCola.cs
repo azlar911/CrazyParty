@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ShakeCola : NetworkBehaviour {
+public class ShakeCola : PlayerBehaviour {
     private GameObject colaColor;
     private Vector2 yposition = new Vector2(0, 0);
 	// Use this for initialization
