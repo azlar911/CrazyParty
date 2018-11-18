@@ -1,2 +1,2 @@
 # CrazyParty
-Gaming Design 2018 Autumn
+Gaming Design 2018 Autumn Hiyahhhhh.
