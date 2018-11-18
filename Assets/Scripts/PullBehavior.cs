@@ -3,35 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PullBehavior : PlayerBehaviour
+public class PullBehaviour : PlayerBehaviour
 {
-
-    void Start()
+    bool isLeft
     {
+        get { return role % 2 == 0; }
+    }
+
+    void Awake()
+    {
+        if (!isLeft)
+        {
+            var dx = GameObject.Find("Main Camera").transform.position.x - transform.position.x;
+            transform.position += new Vector3(2 * dx, 0, 0);
+        }
     }
 
     void Update()
     {
-
         if (!isLocalPlayer)
             return;
-        //OnMouseDown();
     }
 
     void OnMouseDown()
     {
-        if (role % 2 == 0)
+        if (isLeft)
         {
-            Debug.Log("right1");
-            GameObject rope = GameObject.Find("rope");
-            rope.transform.position = rope.transform.position + new Vector3(1, 0, 0);
-            Debug.Log("right2");
+            GameObject.Find("rope").transform.position += new Vector3(-1, 0, 0);
         }
         else
         {
-            GameObject rope = GameObject.Find("rope");
-            rope.transform.position = rope.transform.position + new Vector3(-1, 0, 0);
-            Debug.Log("left");
+            GameObject.Find("rope").transform.position += new Vector3(1, 0, 0);
         }
         gameObject.SetActive(true);
     }

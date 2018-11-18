@@ -437,8 +437,9 @@ MonoBehaviour:
   playerPrefabs:
   - {fileID: 1780903170031494, guid: bfceb193c172db84b9cca4f05fd8ff4f, type: 2}
   - {fileID: 1780903170031494, guid: bfceb193c172db84b9cca4f05fd8ff4f, type: 2}
-  - {fileID: 1619504145107480, guid: 1fd6889788273264183532b85e2482f4, type: 2}
-  - {fileID: 1619504145107480, guid: 1fd6889788273264183532b85e2482f4, type: 2}
+  - {fileID: 1780903170031494, guid: bfceb193c172db84b9cca4f05fd8ff4f, type: 2}
+  - {fileID: 1780903170031494, guid: bfceb193c172db84b9cca4f05fd8ff4f, type: 2}
+  spawnablePrefabs: []
 --- !u!114 &1735719490
 MonoBehaviour:
   m_ObjectHideFlags: 0

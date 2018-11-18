@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114201487350578116}
   - component: {fileID: 61202037311616906}
   m_Layer: 0
-  m_Name: leftPull
+  m_Name: Pull
   m_TagString: leftPull
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
