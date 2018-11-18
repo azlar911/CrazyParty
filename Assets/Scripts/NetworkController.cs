@@ -12,7 +12,6 @@ public class NetworkController : NetworkManager
 
     object countLock = new object();
     int roleCount = 0;
-    int readyCount = 0;
     int clientCount = 0;
 
     void Start()
@@ -52,19 +51,9 @@ public class NetworkController : NetworkManager
         }
     }
 
-    public override void OnServerReady(NetworkConnection conn)
-    {
-        base.OnServerReady(conn);
-        lock (countLock)
-        {
-            readyCount++;
-        }
-    }
-
     public override void OnServerSceneChanged(string s)
     {
         sceneName = s;
-        readyCount = 0;
 
         roleCount = 0;
         Shuffle(roles);
@@ -82,7 +71,7 @@ public class NetworkController : NetworkManager
         if (loader == null)
         {
             Debug.LogError("Game object doesn't contain a SceneLoader script");
-            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id));
+            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id, -1));
         }
         else
         {
@@ -92,23 +81,28 @@ public class NetworkController : NetworkManager
                 i = roleCount++;
             }
             var playerPrefab = loader.playerPrefabs[roles[i]];
-            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id));
+            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id, i));
         }
     }
 
-    IEnumerator SpawnOnClientsReady(NetworkConnection conn, GameObject playerPrefab, short id)
+    IEnumerator SpawnOnClientsReady(NetworkConnection conn, GameObject playerPrefab, short id, int role)
     {
         while (true)
         {
             lock (countLock)
             {
-                if (readyCount >= clientCount)
+                if (roleCount >= clientCount)
                     break;
             }
             yield return null;
         }
 
+        Debug.Log("clientCount = " + clientCount.ToString());
+
         var player = (GameObject)GameObject.Instantiate(playerPrefab);
         NetworkServer.AddPlayerForConnection(conn, player, id);
+
+        var cb = (CrazyBehaviour)player.GetComponent(typeof(CrazyBehaviour));
+        cb.RpcSetRole(role);
     }
 }
