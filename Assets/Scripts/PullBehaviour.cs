@@ -19,7 +19,7 @@ public class PullBehaviour : PlayerBehaviour
 
     void Update()
     {
-<<<<<<< HEAD
+
         if (isLocalPlayer) {
             
             
@@ -49,21 +49,14 @@ public class PullBehaviour : PlayerBehaviour
             }
         }
 
-        
-        Timer += Time.deltaTime;
-        //print("yee");
-        //print(Timer);
 
-        if (Timer > 10)
-        {
-=======
         if (!isLocalPlayer)
             return;
 
         elapsed += Time.deltaTime;
 
         if (elapsed > 10)
->>>>>>> 0c0e5ebf03934cce28f7eaee99981e27c6efc336
+
             LevelDone();
 
     }
@@ -75,13 +68,12 @@ public class PullBehaviour : PlayerBehaviour
 
         GameObject.Find("rope").transform.position += new Vector3(dir / 2, 0, 0);
     }
-<<<<<<< HEAD
+
     */
     [Command]
     void Cmdmove()
     {
         GameObject.Find("rope").transform.position += new Vector3(dir, 0, 0);
     }
-=======
->>>>>>> 0c0e5ebf03934cce28f7eaee99981e27c6efc336
+
 }
