@@ -30,8 +30,8 @@ public class ShakeCola : PlayerBehaviour {
 
     public void getEnd()
     { //Endline如果偵測到可樂已經搖滿房間，會呼叫這個function，設定該玩家已可結束遊戲
-        print("get end!");
-        //playerFinish = true;
+        //print("get end!");
+        playerFinish = true;
     }
 
     [Command] //執行shake cola動作（要從client傳到server)

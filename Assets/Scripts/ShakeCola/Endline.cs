@@ -16,7 +16,7 @@ public class Endline : MonoBehaviour {
     //可樂搖滿房間
     void OnTriggerEnter2D(Collider2D collision)
     {
-        print("success!");
+        //print("success!");
         // Step one
         GameObject clone = (GameObject)Instantiate((GameObject)Resources.Load("prefabs/Click", typeof(GameObject)));
 
