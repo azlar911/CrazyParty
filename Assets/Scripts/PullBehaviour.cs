@@ -10,7 +10,7 @@ public class PullBehaviour : PlayerBehaviour
         get { return role % 2 == 0 ? 1 : -1; }
     }
 
-    void Start()
+    override public void Init()
     {
         transform.position += new Vector3(dir * 7, 0, 0);
     }
