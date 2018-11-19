@@ -40,7 +40,7 @@ public class Persist : NetworkBehaviour
         get { return instance._net; }
     }
 
-    static public List<string> levelScenes
+    static public List<LevelScene> levelScenes
     {
         get { return instance._sl.levelScenes; }
     }

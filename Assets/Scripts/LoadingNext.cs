@@ -14,6 +14,6 @@ public class LoadingNext : NetworkBehaviour
     {
         yield return new WaitForSeconds(t);
         var s = Persist.levelScenes[new System.Random().Next(0, Persist.levelScenes.Count)];
-        Persist.net.ServerChangeScene(s);
+        Persist.net.ServerChangeScene(s.name);
     }
 }
