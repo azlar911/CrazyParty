@@ -14,7 +14,8 @@ public class HitMoleController : PlayerBehaviour {
     void Start () {
 		
 	}
-	
+
+    float Timer = 0;
 	// Update is called once per frame
 	void Update () {
 
@@ -34,6 +35,13 @@ public class HitMoleController : PlayerBehaviour {
                     }
                 }
             }
+        }
+
+        Timer += Time.deltaTime;
+
+        if(Timer > 10)
+        {
+            LevelDone();
         }
     }
 
