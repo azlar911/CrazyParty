@@ -29,26 +29,29 @@ public class PullBehaviour : PlayerBehaviour
 
                 if (hit.collider != null)
                 {
-                    /*
-                    Debug.Log(hit.collider.gameObject.name == "Mole(Clone)");
-                    if (hit.collider.gameObject.tag == "rightPull" && dir == 1)
+                    Debug.Log(dir);
+
+                    //Debug.Log(hit.collider.gameObject.name == "Mole(Clone)");
+                    if (hit.collider.gameObject.transform.position.x == 7 && dir == 1)
                     {
+                        Debug.Log("right");
+                        Cmdmove();                       
+                    }
+                    else if(hit.collider.gameObject.transform.position.x == -7 && dir == -1)
+                    {
+                        Debug.Log("left");
                         Cmdmove();
                     }
-                    else if(hit.collider.gameObject.tag == "leftPull" && dir == -1)
-                    {
-                        Cmdmove();
-                    }
-                    */
-                    Cmdmove();
+                    
+                    //Cmdmove();
                 }
             }
         }
 
         
         Timer += Time.deltaTime;
-        print("yee");
-        print(Timer);
+        //print("yee");
+        //print(Timer);
 
         if (Timer > 10)
         {
