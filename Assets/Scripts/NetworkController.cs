@@ -104,7 +104,7 @@ public class NetworkController : NetworkManager
             }
             yield return null;
         }
-
+        
         var player = (GameObject)GameObject.Instantiate(playerPrefab);
         var pb = (PlayerBehaviour)player.GetComponent(typeof(PlayerBehaviour));
         pb.role = role;
