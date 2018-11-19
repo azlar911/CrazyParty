@@ -1,22 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class SceneList : MonoBehaviour {
+[System.Serializable]
+public struct LevelScene
+{
+    public string name;
+    public bool active;
+};
 
-    public List<string> levelScenes = new List<string>();
+public class SceneList : MonoBehaviour
+{
+    public List<LevelScene> levelScenes = new List<LevelScene>();
 
     [HideInInspector]
     public Dictionary<string, int> sceneId = new Dictionary<string, int>();
 
-    // Use this for initialization
-    void Start () {
+    void Start()
+    {
+        levelScenes = levelScenes.Where(x => x.active).ToList();
+
         for (int i = 0; i < levelScenes.Count; i++)
-            sceneId[levelScenes[i]] = i;
+            sceneId[levelScenes[i].name] = i;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
