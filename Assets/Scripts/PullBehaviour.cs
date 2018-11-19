@@ -19,9 +19,9 @@ public class PullBehaviour : PlayerBehaviour
 
     void Update()
     {
-        if (!isLocalPlayer) {
-            return;
-            /*
+        if (isLocalPlayer) {
+            
+            
             if (Input.GetMouseButtonDown(0))
             {
             Debug.Log(Input.mousePosition);
@@ -29,6 +29,7 @@ public class PullBehaviour : PlayerBehaviour
 
                 if (hit.collider != null)
                 {
+                    /*
                     Debug.Log(hit.collider.gameObject.name == "Mole(Clone)");
                     if (hit.collider.gameObject.tag == "rightPull" && dir == 1)
                     {
@@ -38,8 +39,10 @@ public class PullBehaviour : PlayerBehaviour
                     {
                         Cmdmove();
                     }
+                    */
+                    Cmdmove();
                 }
-            }*/
+            }
         }
 
         
@@ -53,14 +56,15 @@ public class PullBehaviour : PlayerBehaviour
         }
         
     }
+    /*
     void OnMouseDown()
     {
         GameObject.Find("rope").transform.position += new Vector3(dir/2, 0, 0);
     }
-    /*
+    */
     [Command]
     void Cmdmove()
     {
         GameObject.Find("rope").transform.position += new Vector3(dir, 0, 0);
-    }*/
+    }
 }
