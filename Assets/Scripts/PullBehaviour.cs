@@ -10,18 +10,34 @@ public class PullBehaviour : PlayerBehaviour
         get { return role % 2 == 0 ? 1 : -1; }
     }
 
-    void Start()
+    override public void Init()
     {
         transform.position += new Vector3(dir * 7, 0, 0);
     }
+
+    float elapsed;
 
     void Update()
     {
         if (!isLocalPlayer)
             return;
+
+        elapsed += Time.deltaTime;
+
+        if (elapsed > 10)
+            LevelDone();
     }
 
     void OnMouseDown()
+    {
+        if (!isLocalPlayer)
+            return;
+
+        Cmdmove();
+    }
+
+    [Command]
+    void Cmdmove()
     {
         GameObject.Find("rope").transform.position += new Vector3(dir, 0, 0);
     }

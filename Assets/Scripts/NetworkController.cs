@@ -19,12 +19,6 @@ public class NetworkController : NetworkManager
 
     int levelDoneCount = 0;
 
-    void Start()
-    {
-        for (int i = 0; i < roles.Length; i++)
-            roles[i] = i;
-    }
-
     static void Shuffle(int[] arr)  // How the hell is this not in the standard library??
     {
         var rng = new System.Random();
@@ -60,10 +54,18 @@ public class NetworkController : NetworkManager
     {
         sceneName = s;
 
-        roleCount = 0;
+        roles = new int[clientCount];
+        for (int i = 0; i < roles.Length; i++)
+            roles[i] = i;
+        
         Shuffle(roles);
 
-        levelDoneCount = 0;
+        // Race condition if Unity doesn't ignore AddPlayer from earlier scenes.
+        lock(countLock)
+        {
+            roleCount = 0;
+            levelDoneCount = 0;
+        }
 
         base.OnServerSceneChanged(s);
     }
@@ -104,10 +106,11 @@ public class NetworkController : NetworkManager
             }
             yield return null;
         }
-
+        
         var player = (GameObject)GameObject.Instantiate(playerPrefab);
         var pb = (PlayerBehaviour)player.GetComponent(typeof(PlayerBehaviour));
         pb.role = role;
+        pb.Init();
         NetworkServer.AddPlayerForConnection(conn, player, id);
     }
 
