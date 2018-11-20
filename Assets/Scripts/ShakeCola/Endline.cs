@@ -19,15 +19,12 @@ public class Endline : MonoBehaviour
     //可樂搖滿房間
     void OnTriggerEnter2D(Collider2D collision)
     {
-
         // Step one
-        GameObject clone = (GameObject)Instantiate((GameObject)Resources.Load("prefabs/Click", typeof(GameObject)));
+        ShakeCola[] clones = FindObjectsOfType<ShakeCola>();
 
         // Step two
-        ShakeCola shakeCola = clone.GetComponent<ShakeCola>();
-
-        // Step three
-        shakeCola.getEnd();
+        foreach (var shakeCola in clones)
+            shakeCola.getEnd();
         //print("success!");
 
     }
