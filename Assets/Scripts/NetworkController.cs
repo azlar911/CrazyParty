@@ -32,6 +32,13 @@ public class NetworkController : NetworkManager
         }
     }
 
+    public override void OnClientConnect(NetworkConnection conn)
+    {
+        base.OnClientConnect(conn);
+        Persist.goodScores = new SyncListInt();
+        Persist.evilScores = new SyncListInt();
+    }
+
     public override void OnServerConnect(NetworkConnection conn)
     {
         base.OnServerConnect(conn);
