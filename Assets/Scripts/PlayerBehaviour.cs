@@ -6,16 +6,16 @@ using UnityEngine.Networking;
 public class PlayerBehaviour : NetworkBehaviour
 {
     [SyncVar]
-    public int role = 0;
+    public int role, playerId;
 
     bool levelDone = false;
 
-    // Called after GameObject instantiation but before spawning on clients, therefore has no effect on client side.
+    // Called after GameObject instantiation but before spawning on clients, has no effect on client side.
     virtual public void Init()
     {
 
     }
-    
+
     public void LevelDone()
     {
         if (!levelDone)

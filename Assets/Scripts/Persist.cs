@@ -15,8 +15,7 @@ public class Persist : NetworkBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    SyncListInt _goodScores;
-    SyncListInt _evilScores;
+    SyncListInt _goodScores, _evilScores;
 
     NetworkController _net;
     SceneList _sl;
