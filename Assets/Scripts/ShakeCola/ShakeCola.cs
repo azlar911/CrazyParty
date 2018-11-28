@@ -43,6 +43,6 @@ public class ShakeCola : PlayerBehaviour
     [Command] //執行shake cola動作（要從client傳到server)
     void CmdShakeCola()
     {
-        colaColor.transform.Translate(yposition + new Vector2(0, 10));
+        colaColor.transform.Translate(yposition + new Vector2(0, 20));
     }
 }
