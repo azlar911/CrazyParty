@@ -6,18 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Lobby : NetworkBehaviour
 {
-    void Start()
-    {
-        
-    }
-    
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Persist.net.IsClientConnected())
-        {
-            Persist.goodScores = new SyncListInt();
-            Persist.evilScores = new SyncListInt();
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetTouch(0).phase == TouchPhase.Began) && Persist.net.IsClientConnected())
             Persist.net.ServerChangeScene("LoadingNext");
-        }
     }
 }

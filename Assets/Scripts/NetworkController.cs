@@ -19,6 +19,8 @@ public class NetworkController : NetworkManager
 
     int levelDoneCount = 0;
 
+    int[] playerIds = { -1, -1, -1, -1 };
+
     static void Shuffle(int[] arr)  // How the hell is this not in the standard library??
     {
         var rng = new System.Random();
@@ -32,12 +34,26 @@ public class NetworkController : NetworkManager
         }
     }
 
+    public override void OnClientConnect(NetworkConnection conn)
+    {
+        base.OnClientConnect(conn);
+        Persist.goodScores = new SyncListInt();
+        Persist.evilScores = new SyncListInt();
+    }
+
     public override void OnServerConnect(NetworkConnection conn)
     {
         base.OnServerConnect(conn);
         lock (countLock)
         {
+            // In game or full.
+            if(sceneName != null || clientCount > 4)
+            {
+                conn.Disconnect();
+                return;
+            }
             clientCount++;
+            playerIds[System.Array.IndexOf(playerIds, -1)] = conn.connectionId;
         }
     }
 
@@ -47,6 +63,7 @@ public class NetworkController : NetworkManager
         lock (countLock)
         {
             clientCount--;
+            playerIds[System.Array.IndexOf(playerIds, conn.connectionId)] = -1;
         }
     }
 
@@ -81,7 +98,7 @@ public class NetworkController : NetworkManager
         if (loader == null)
         {
             Debug.LogError("Game object doesn't contain a SceneLoader script");
-            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id, -1));
+            StartCoroutine(SpawnOnClientsReady(conn, playerPrefab, id, -1));    // Spawn default player prefab.
         }
         else
         {
@@ -110,6 +127,7 @@ public class NetworkController : NetworkManager
         var player = (GameObject)GameObject.Instantiate(playerPrefab);
         var pb = (PlayerBehaviour)player.GetComponent(typeof(PlayerBehaviour));
         pb.role = role;
+        pb.playerId = playerIds[System.Array.IndexOf(playerIds, conn.connectionId)];
         pb.Init();
         NetworkServer.AddPlayerForConnection(conn, player, id);
     }
