@@ -11,23 +11,14 @@ public class HitMoleController : PlayerBehaviour
     public bool[] holeOccupied;
     int localGoodScore, localEvilScore;
 
-    // Use this for initialization
-    void Start()
-    {
-        int i;
-        localGoodScore = 0;
-        localEvilScore = 0;
-
-    }
-
     float timer = 0;
 
     void Update()
     {
-        int i;
         if (!isLocalPlayer)
             return;
 
+        int i;
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log(Input.mousePosition);
