@@ -18,7 +18,7 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void LevelDone(int good, int evil)
     {
-        if (!levelDone)
+        if(!levelDone)
         {
             goodScore += good;
             evilScore += evil;
