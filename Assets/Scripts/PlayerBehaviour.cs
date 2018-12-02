@@ -35,7 +35,7 @@ public class PlayerBehaviour : NetworkBehaviour
             CmdLevelDone();
         }
     }
-
+    
     public int goodScore
     {
         get { return Persist.goodScores[playerId]; }
