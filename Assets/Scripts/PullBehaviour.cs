@@ -28,24 +28,28 @@ public class PullBehaviour : PlayerBehaviour
 
         elapsed += Time.deltaTime;
 
-        if (elapsed > 10)
+        if (elapsed > 10 )
         {
             float pos = GameObject.Find("bow1").transform.position.x;
 
-            if (pos < 0)
+            if (pos < 0 && dir < 0)
             {
                 print("left team win!");
-                //left member ++ goodscore
+                LevelDone(1, 0);
+                print(goodScore);
             }
-            else if (pos > 0)
+            else if (pos > 0 && dir >0)
             {
                 print("right team win!");
                 //right member ++ goodscore
+                //evilScore = 1;
+                LevelDone(1, 0);
+                print(goodScore);
             }
-
-            //goodScores
-
-            LevelDone();
+            else
+            {
+                print("something goes wornggggg");
+            }
 
         }
     }
