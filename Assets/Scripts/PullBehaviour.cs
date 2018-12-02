@@ -48,7 +48,10 @@ public class PullBehaviour : PlayerBehaviour
             }
             else
             {
-                print("something goes wornggggg");
+                print("player lose");
+                LevelDone(0,0);
+                print(goodScore);
+                print(evilScore);
             }
 
         }
