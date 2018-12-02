@@ -40,7 +40,7 @@ public class ShakeCola : PlayerBehaviour
         if (playerFinish)
         { //如果玩家已經結束遊戲
             Debug.Log("leveldone");
-            //LevelDone();
+            LevelDone(0, 0);
         }
     }
 
