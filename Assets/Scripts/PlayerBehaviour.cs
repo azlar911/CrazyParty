@@ -24,7 +24,7 @@ public class PlayerBehaviour : NetworkBehaviour
             CmdLevelDone();
         }
     }
-
+    
     public void LevelDone(int good, int evil)
     {
         if(!levelDone)
