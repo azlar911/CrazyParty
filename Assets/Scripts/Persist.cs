@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 
 public class Persist : NetworkBehaviour
 {
-
     void Start()
     {
         _net = (NetworkController)gameObject.GetComponent(typeof(NetworkController));
@@ -28,13 +27,11 @@ public class Persist : NetworkBehaviour
     static public SyncListInt goodScores
     {
         get { return GetLobby().goodScores; }
-        set { GetLobby().goodScores = value; }
     }
 
     static public SyncListInt evilScores
     {
         get { return GetLobby().evilScores; }
-        set { GetLobby().evilScores = value; }
     }
 
     static public NetworkController net

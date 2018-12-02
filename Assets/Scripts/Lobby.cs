@@ -6,18 +6,22 @@ using UnityEngine.SceneManagement;
 
 public class Lobby : NetworkBehaviour
 {
-    public SyncListInt goodScores, evilScores;
+    public SyncListInt goodScores = new SyncListInt(), evilScores = new SyncListInt();
 
     void Start()
     {
         DontDestroyOnLoad(this);
+        StartCoroutine(WaitForUnity());
+    }
 
-        if (!isServer)
-            return;
+    // I don't know why.
+    IEnumerator WaitForUnity()
+    {
+        yield return null;
 
         Persist.goodScores.Clear();
         Persist.evilScores.Clear();
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             Persist.goodScores.Add(0);
             Persist.evilScores.Add(0);

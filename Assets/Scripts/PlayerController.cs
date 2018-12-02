@@ -21,6 +21,10 @@ public class PlayerController : PlayerBehaviour
         goodScore += 42;
         evilScore -= 42;
 
-        Debug.Log(goodScore + "," + evilScore);
+        string s = "";
+        foreach (var i in Persist.goodScores)
+            s += i + " ";
+
+        Debug.Log(s);
     }
 }
