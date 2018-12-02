@@ -4,21 +4,30 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class HitMoleController : PlayerBehaviour {
-    public GameObject Mole;
 
-    public static int numOfHole = 2;
+    public int numOfPlayer;
 
-    public Vector2[] holePosition = new Vector2[numOfHole];
-    public bool[] holeOccupied = new bool[numOfHole];
+    public Vector2[] holePosition;
+    public bool[] holeOccupied;
+    public int[] hitMoleScore;
+
+    public bool levelDone;
     // Use this for initialization
     void Start () {
-		
+        int i;
+        for (i = 0; i < numOfPlayer; i++){
+            hitMoleScore[i] = 0;
+        }
+
+        levelDone = false;
 	}
 
     float Timer = 0;
 	// Update is called once per frame
 	void Update () {
         int i;
+        if (!isLocalPlayer)
+            return;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -32,7 +41,10 @@ public class HitMoleController : PlayerBehaviour {
                     Debug.Log(hit.collider.gameObject.name == "Mole(Clone)");
                     if (hit.collider.gameObject.name == "Mole(Clone)")
                     {
+
                         CmdDestroyMole(hit.collider.gameObject, this.role, this.playerId);
+                        hitMoleScore[this.playerId]++;
+                        //Persist.goodScores[this.playerId]++;
                     }
                 }
             }
@@ -50,6 +62,8 @@ public class HitMoleController : PlayerBehaviour {
                         if (hit.collider.gameObject.name == "Mole(Clone)")
                         {
                             CmdDestroyMole(hit.collider.gameObject, this.role, this.playerId);
+                            hitMoleScore[this.playerId]++;
+                            //Persist.goodScores[this.playerId]++;
                         }
                     }
 
@@ -59,10 +73,16 @@ public class HitMoleController : PlayerBehaviour {
 
         Timer += Time.deltaTime;
 
-        if(Timer > 10)
+        if(Timer > 10 && !levelDone)
         {
-            foreach (var s in Persist.goodScores)
-                Debug.Log(s);
+            Debug.Log(Timer);
+            for (i = 0; i < numOfPlayer; i++)
+            {
+                //Persist.goodScores[i] += hitMoleScore[i];
+                CmdAddScore(this.playerId, hitMoleScore[i]);
+                Debug.Log(isLocalPlayer + "**" + i + ", " + hitMoleScore[i] + " " + Persist.goodScores[i]);
+            }
+            levelDone = true;
             LevelDone();
 
         }
@@ -72,6 +92,11 @@ public class HitMoleController : PlayerBehaviour {
     void CmdDestroyMole(GameObject go, int thisRole, int thisPlayerId)
     {
         NetworkServer.Destroy(go);
-        //Persist.goodScores[thisPlayerId] += 1;
+    }
+
+    [Command]
+    void CmdAddScore(int thisPlayerId, int score)
+    {
+        Persist.goodScores[thisPlayerId] += score;
     }
 }
