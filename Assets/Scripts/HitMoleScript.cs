@@ -28,6 +28,7 @@ public class HitMoleScript : PlayerBehaviour
             holePosition[i] = GameObject.Find("Hole" + (i + 1)).transform.position;
             holeOccupied[i] = false;
         }
+        GetComponent<AudioSource>().Play();
     }
 
     void FixedUpdate()
