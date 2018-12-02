@@ -29,6 +29,7 @@ public class HitMoleController : PlayerBehaviour
                 Debug.Log(hit.collider.gameObject.name == "Mole(Clone)");
                 if (hit.collider.gameObject.name == "Mole(Clone)")
                 {
+                    GetComponent<AudioSource>().Play();
                     CmdDestroyMole(hit.collider.gameObject, this.role, this.playerId);
                     localGoodScore++;
                     //Persist.goodScores[this.playerId]++;
@@ -47,6 +48,7 @@ public class HitMoleController : PlayerBehaviour
                     Debug.Log(hit.collider.gameObject.name == "Mole(Clone)");
                     if (hit.collider.gameObject.name == "Mole(Clone)")
                     {
+                        GetComponent<AudioSource>().Play();
                         CmdDestroyMole(hit.collider.gameObject, this.role, this.playerId);
                         localEvilScore++;
                         //Persist.goodScores[this.playerId]++;
