@@ -25,6 +25,17 @@ public class PlayerBehaviour : NetworkBehaviour
         }
     }
 
+    public void LevelDone(int good, int evil)
+    {
+        if(!levelDone)
+        {
+            goodScore += good;
+            evilScore += evil;
+            levelDone = true;
+            CmdLevelDone();
+        }
+    }
+
     public int goodScore
     {
         get { return Persist.goodScores[playerId]; }
