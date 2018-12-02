@@ -30,16 +30,20 @@ public class HitMoleScript : PlayerBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        if (!isServer)
+            return;
+
+        if (Random.Range(0, 100) <= 10)
+            CmdSpawnMole();
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (!isServer)
             return;
-
-        if (Random.Range(0, 100) <= 2)
-        {
-            CmdSpawnMole();
-        }
 
         int i;
         RaycastHit2D hit;
@@ -54,9 +58,7 @@ public class HitMoleScript : PlayerBehaviour
                 holeOccupied[i] = false;
             }
         }
-
     }
-
 
     [Command]
     void CmdSpawnMole()
@@ -70,5 +72,4 @@ public class HitMoleScript : PlayerBehaviour
             holeOccupied[i] = true;
         }
     }
-
 }
