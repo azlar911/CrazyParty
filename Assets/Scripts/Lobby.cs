@@ -6,14 +6,29 @@ using UnityEngine.SceneManagement;
 
 public class Lobby : NetworkBehaviour
 {
+    public SyncListInt goodScores, evilScores;
+
     void Start()
     {
-        Persist.goodScores = new SyncListInt();
-        Persist.evilScores = new SyncListInt();
+        DontDestroyOnLoad(this);
+
+        if (!isServer)
+            return;
+
+        Persist.goodScores.Clear();
+        Persist.evilScores.Clear();
+        for(int i = 0; i < 4; i++)
+        {
+            Persist.goodScores.Add(0);
+            Persist.evilScores.Add(0);
+        }
     }
 
     void Update()
     {
+        if (!isServer)
+            return;
+
         if ((Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)) && Persist.net.IsClientConnected())
             Persist.net.ServerChangeScene("LoadingNext");
     }
