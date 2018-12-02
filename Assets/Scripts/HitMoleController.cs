@@ -9,17 +9,14 @@ public class HitMoleController : PlayerBehaviour {
 
     public Vector2[] holePosition;
     public bool[] holeOccupied;
-    public int[] hitMoleScore;
+    int localGoodScore, localEvilScore;
 
-    public bool levelDone;
     // Use this for initialization
     void Start () {
         int i;
-        for (i = 0; i < numOfPlayer; i++){
-            hitMoleScore[i] = 0;
-        }
+        localGoodScore = 0;
+        localEvilScore = 0;
 
-        levelDone = false;
 	}
 
     float Timer = 0;
@@ -43,7 +40,7 @@ public class HitMoleController : PlayerBehaviour {
                     {
 
                         CmdDestroyMole(hit.collider.gameObject, this.role, this.playerId);
-                        hitMoleScore[this.playerId]++;
+                        localGoodScore++;
                         //Persist.goodScores[this.playerId]++;
                     }
                 }
@@ -62,7 +59,7 @@ public class HitMoleController : PlayerBehaviour {
                         if (hit.collider.gameObject.name == "Mole(Clone)")
                         {
                             CmdDestroyMole(hit.collider.gameObject, this.role, this.playerId);
-                            hitMoleScore[this.playerId]++;
+                            localEvilScore++;
                             //Persist.goodScores[this.playerId]++;
                         }
                     }
@@ -73,30 +70,21 @@ public class HitMoleController : PlayerBehaviour {
 
         Timer += Time.deltaTime;
 
-        if(Timer > 10 && !levelDone)
+        if(Timer > 10)
         {
-            Debug.Log(Timer);
-            for (i = 0; i < numOfPlayer; i++)
-            {
-                //Persist.goodScores[i] += hitMoleScore[i];
-                CmdAddScore(this.playerId, hitMoleScore[i]);
-                Debug.Log(isLocalPlayer + "**" + i + ", " + hitMoleScore[i] + " " + Persist.goodScores[i]);
-            }
-            levelDone = true;
-            LevelDone();
+            LevelDone(localGoodScore , localEvilScore);
 
+            for (i = 0; i < 4; i++){
+                Debug.Log(Persist.goodScores[i] + " " + Persist.evilScores[i]);
+            }
         }
     }
 
     [Command]
     void CmdDestroyMole(GameObject go, int thisRole, int thisPlayerId)
     {
-        NetworkServer.Destroy(go);
+        if (go != null)
+            NetworkServer.Destroy(go);
     }
 
-    [Command]
-    void CmdAddScore(int thisPlayerId, int score)
-    {
-        Persist.goodScores[thisPlayerId] += score;
-    }
 }
