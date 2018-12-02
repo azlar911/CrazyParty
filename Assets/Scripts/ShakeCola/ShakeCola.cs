@@ -6,10 +6,11 @@ using UnityEngine.Networking;
 public class ShakeCola : PlayerBehaviour
 {
     private GameObject colaColor; //不同Group有不同cola
-    private GameObject colaColor2;
+    //private GameObject colaColor2;
     private Vector2 yposition = new Vector2(0, 0);
-    private int group; //group no.
+    private int group = 0; //group no.
     private int countShake = 0; //計算每個玩家shake幾次
+    private int[] groupScore; //計算各個group的score
 
     public bool playerFinish = false; //玩家是否要結束
 
@@ -17,11 +18,15 @@ public class ShakeCola : PlayerBehaviour
     void Start()
     {
         colaColor = GameObject.Find("ColaColor");
-        colaColor2 = GameObject.Find("ColaColor2");
+        groupScore = new int[2];
 
         //分隊
-        group = role % 2; //group為0或1
-        //print(group);
+        if (isLocalPlayer)
+        {
+            print("role:" + role);
+            group = role % 2; //group為0或1
+            print("group:" + group);
+        }
     }
 
     // Update is called once per frame
@@ -39,8 +44,20 @@ public class ShakeCola : PlayerBehaviour
 
         if (playerFinish)
         { //如果玩家已經結束遊戲
-            Debug.Log("leveldone");
-            LevelDone(0, 0);
+            //判斷哪個group贏了
+            if((groupScore[0] > groupScore[1]) && (group == 0))
+            {
+                LevelDone(1, 0);
+            }
+            //Debug.Log("leveldone");
+            else if((groupScore[0] < groupScore[1]) && (group == 1))
+            {
+                LevelDone(1, 0);
+            }
+            else
+            {
+                LevelDone(0, 0);
+            }
         }
     }
 
@@ -54,6 +71,8 @@ public class ShakeCola : PlayerBehaviour
     void CmdShakeCola()
     {
         countShake += 1;
+        print("countShake:" + countShake);
+        groupScore[group] += countShake;
         colaColor.transform.Translate(yposition + new Vector2(0, 20));
     }
 }
