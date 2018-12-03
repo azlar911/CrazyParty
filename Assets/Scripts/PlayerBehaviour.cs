@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 public class PlayerBehaviour : NetworkBehaviour
 {
+    [HideInInspector]
     [SyncVar]
     public int role, playerId;
 
