@@ -26,8 +26,8 @@ public class BallController : PlayerBehaviour
         {
             var wc = (WindController)w.GetComponent(typeof(WindController));
             var a = wc.GetAzimuth() * Mathf.Deg2Rad;
-            x += Mathf.Cos(a) * windStrength;
-            y += Mathf.Sin(a) * windStrength;
+            x -= Mathf.Cos(a) * windStrength;
+            y -= Mathf.Sin(a) * windStrength;
         }
 
         rb.AddForce(new Vector3(x * Time.deltaTime, y * Time.deltaTime, 0));

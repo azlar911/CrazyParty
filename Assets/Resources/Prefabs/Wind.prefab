@@ -74,7 +74,7 @@ MonoBehaviour:
     i14: 42
     i15: 65
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114734810228959264
 MonoBehaviour:
   m_ObjectHideFlags: 1

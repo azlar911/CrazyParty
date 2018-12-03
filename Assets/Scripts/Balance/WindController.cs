@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class WindController : PlayerBehaviour
 {
     public float sensitivity = 10, cutoff = 2;
+    GameObject ball;
 
     public float GetAzimuth()
     {
@@ -29,7 +30,7 @@ public class WindController : PlayerBehaviour
 
     void Start()
     {
-
+        ball = GameObject.Find("BalanceBall");
     }
 
     void Update()
@@ -58,5 +59,10 @@ public class WindController : PlayerBehaviour
         Debug.Log("a = " + GetAzimuth() + ", da = " + da);
 
         AddAzimuth(da);
+
+        if (ball.transform.position.sqrMagnitude > 16)
+        {
+            LevelDone(1, 0);
+        }
     }
 }
