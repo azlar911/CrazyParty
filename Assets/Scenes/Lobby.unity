@@ -268,10 +268,8 @@ MonoBehaviour:
   - name: TugOfWar
     active: 0
   - name: ShakeCola
-    active: 0
-  - name: HitMole
     active: 1
-  - name: LevelTemplate
+  - name: HitMole
     active: 0
 --- !u!1 &744716550
 GameObject:

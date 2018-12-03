@@ -19,7 +19,7 @@ public class PlayerBehaviour : NetworkBehaviour
 
     public void LevelDone()
     {
-        if (!levelDone)
+        if(!levelDone)
         {
             levelDone = true;
             CmdLevelDone();
