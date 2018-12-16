@@ -6,22 +6,56 @@ using UnityEngine.Networking;
 public class PlayerBehaviour : NetworkBehaviour
 {
     [SyncVar]
-    public int role = 0;
+    public int role, playerId;
 
     bool levelDone = false;
 
-    public void LevelDone()
+    // Called after GameObject instantiation but before spawning on clients, has no effect on client side.
+    virtual public void Init()
     {
-        if (!levelDone)
+
+    }
+
+    public void LevelDone(int good, int evil)
+    {
+        if(!levelDone)
         {
+            goodScore += good;
+            evilScore += evil;
             levelDone = true;
             CmdLevelDone();
         }
+    }
+    
+    public int goodScore
+    {
+        get { return Persist.goodScores[playerId]; }
+        set { CmdGoodScore(value); }
+    }
+
+    public int evilScore
+    {
+        get { return Persist.evilScores[playerId]; }
+        set { CmdEvilScore(value); }
     }
 
     [Command]
     void CmdLevelDone()
     {
         Persist.net.ServerLevelDone();
+    }
+
+    [Command]
+    void CmdGoodScore(int s)
+    {
+        Persist.goodScores[playerId] = s;
+        Persist.goodScores.Dirty(playerId);
+    }
+
+    [Command]
+    void CmdEvilScore(int s)
+    {
+        Persist.evilScores[playerId] = s;
+        Persist.evilScores.Dirty(playerId);
     }
 }
